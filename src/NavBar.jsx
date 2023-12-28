@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import "./App.css";
+import im from "../public/images/b.jpg";
 
 import { Link } from "react-router-dom";
 
@@ -12,15 +13,33 @@ export const Navbar = () => {
   };
   return (
     <nav>
-      <div className="logo">order us</div>
+      <div className="logo">
+        <img
+          src={im}
+          style={{ width: "4rem", height: "4rem", borderRadius: "2rem" }}
+        />
+      </div>
+      <div
+        style={{
+          marginRight: "28rem",
+          fontWeight: "bold",
+          fontSize: "2rem",
+          //position: "flex",
+        }}
+      >
+        welcome
+      </div>
       <ul className={showMenu ? "menu-active" : "menu"}>
         <li>
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/service">Service</Link>
+          <Link to="/details">details</Link>
         </li>
-
+        <li>
+          {" "}
+          <Link to="/orderus">Order us</Link>
+        </li>
         <li>
           <Link to="/about">About</Link>
         </li>
