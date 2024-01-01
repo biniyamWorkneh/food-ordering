@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import ServiceCard from "./ServiceCards.jsx";
+import ServiceCard from "./ServiceCards";
+
 import imageOne from "../public/images/bb.jpg";
 import imageTwo from "../public/images/coffee.jpg";
 import imageThree from "../public/images/pp.jpg";
@@ -23,18 +23,6 @@ const Service = () => {
     { id: 8, imageSrc: imageEight, price: 120.0 },
     { id: 9, imageSrc: imageNine, price: 115.0 },
   ];
-
-  const [selectedService, setSelectedService] = useState(null);
-  const [orderAmount, setOrderAmount] = useState(null);
-  const navigate = useNavigate();
-
-  const handleOrder = () => {
-    if (selectedService) {
-      navigate(`/payment/${selectedService.id}?amount=${orderAmount}`);
-    } else {
-      console.error("No service selected");
-    }
-  };
 
   const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
@@ -61,17 +49,6 @@ const Service = () => {
         alignItems: "center",
       }}
     >
-      <button
-        onClick={handleOrder}
-        style={{
-          margin: "60px",
-          height: "100px",
-          color: "white",
-          backgroundColor: "blueviolet",
-        }}
-      >
-        Order
-      </button>
       <div
         style={{
           display: "flex",
@@ -86,8 +63,8 @@ const Service = () => {
             id={service.id}
             imageSrc={service.imageSrc}
             price={service.price}
-            onSelect={() => setSelectedService(service)}
-            onAmountChange={(amount) => setOrderAmount(amount)}
+            onSelect={() => console.log("Service selected:", service)}
+            onAmountChange={(amount) => console.log("Amount changed:", amount)}
           />
         ))}
       </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import "./App.css";
-import im from "../public/images/b.jpg";
+import im from "../public/images/logo2.jpg";
 
 import { Link } from "react-router-dom";
 
@@ -16,7 +16,7 @@ export const Navbar = () => {
       <div className="logo">
         <img
           src={im}
-          style={{ width: "4rem", height: "4rem", borderRadius: "2rem" }}
+          style={{ width: "5rem", height: "4rem", borderRadius: "2rem" }}
         />
       </div>
       <div
@@ -37,8 +37,10 @@ export const Navbar = () => {
           <Link to="/details">details</Link>
         </li>
         <li>
-          {" "}
-          <Link to="/orderus">Order us</Link>
+          <Link to="/orderus">Order</Link>
+        </li>
+        <li>
+          <Link to="/cart">Cart</Link>
         </li>
         <li>
           <Link to="/about">About</Link>

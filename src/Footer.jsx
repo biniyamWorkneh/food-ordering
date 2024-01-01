@@ -30,7 +30,7 @@ const Footer = () => {
           <p>
             telegram:{" "}
             <a
-              href="http://t.me/${BWin_21}"
+              href="http://t.me/BWin_21"
               target="_blank"
               style={{ color: " #3498db" }}
             >
@@ -40,7 +40,7 @@ const Footer = () => {
         </div>
         <div style={{ flex: 1, margin: "10px" }}>
           <h3>Company Info</h3>
-          <p> company: order us restorant.</p>
+          <p> company: etsub food.</p>
           <p></p>
           <p style={{}}>Location: bole kifle ketema</p>
           <p> Infront of bole medanealem</p>

@@ -55,7 +55,7 @@ const App = () => {
         backgroundImage: `url(${bini})`,
         backgroundSize: "cover",
         paddingTop: "50px",
-        overflow: "hidden", // Ensure the background doesn't overflow
+        overflow: "hidden",
       }}
     >
       <About />

@@ -13,7 +13,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 /* index.css or your global CSS file */
-
+/*
 body {
   margin: 0;
   padding: 0;
@@ -22,8 +22,9 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  background-image: url("images/545589.jpg");
+  background-image: url("images/1015.jpg");
 }
+*/
 
 
 a {

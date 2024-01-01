@@ -1,123 +1,100 @@
+// ServiceCard.jsx
+
 import React, { useState } from "react";
 
 const ServiceCard = (props) => {
-  const [amountOne, setAmountOne] = useState(() => {
-    const amtTwo = JSON.parse(localStorage.getItem("amount2"));
-    return amtTwo ?? 1;
-  });
+  const storageKey = `amount${props.id}`;
 
-  const [amountTwo, setAmountTwo] = useState(() => {
-    const amtOne = JSON.parse(localStorage.getItem("amount1"));
-    return amtOne ?? 1;
-  });
+  const getStoredAmount = () => {
+    try {
+      const storedValue = localStorage.getItem(storageKey);
+      return storedValue ? JSON.parse(storedValue) : 1;
+    } catch (error) {
+      console.error("Error parsing JSON:", error);
+      return 1; // Default to 1 if there's an error
+    }
+  };
 
-  const [amountThree, setAmountThree] = useState(() => {
-    const amtThree = JSON.parse(localStorage.getItem("amount3"));
-    return amtThree ?? 1;
-  });
-
-  console.log("==============", props);
+  const [amount, setAmount] = useState(() => getStoredAmount());
 
   const handleIncrement = () => {
-    setAmountOne((prevAmount) => {
-      const newAmount = prevAmount + 1;
-      props.onAmountChange(newAmount);
-      localStorage.setItem("amount1", newAmount);
-      return newAmount;
-    });
-
-    setAmountTwo((prevAmount) => {
-      const newAmount = prevAmount + 1;
-      props.onAmountChange(newAmount);
-      localStorage.setItem("amount2", newAmount);
-      return newAmount;
-    });
-
-    setAmountThree((prevAmount) => {
-      const newAmount = prevAmount + 1;
-      props.onAmountChange(newAmount);
-      localStorage.setItem("amount3", newAmount);
-      return newAmount;
-    });
+    const newAmount = amount + 1;
+    props.onAmountChange(newAmount);
+    setAmount(newAmount);
+    localStorage.setItem(storageKey, newAmount);
   };
 
   const handleDecrement = () => {
-    if (props.id === 1 && amountOne > 1) {
-      setAmountOne((prevAmount) => {
-        const newAmount = prevAmount - 1;
-        props.onAmountChange(newAmount);
-        localStorage.setItem("amount1", newAmount);
-        return newAmount;
-      });
-    } else if (props.id === 2 && amountTwo > 1) {
-      setAmountTwo((prevAmount) => {
-        const newAmount = prevAmount - 1;
-        props.onAmountChange(newAmount);
-        localStorage.setItem("amount2", newAmount);
-        return newAmount;
-      });
-    } else if (props.id === 3 && amountThree > 1) {
-      setAmountThree((prevAmount) => {
-        const newAmount = prevAmount - 1;
-        props.onAmountChange(newAmount);
-        localStorage.setItem("amount3", newAmount);
-        return newAmount;
-      });
+    if (amount > 1) {
+      const newAmount = amount - 1;
+      props.onAmountChange(newAmount);
+      setAmount(newAmount);
+      localStorage.setItem(storageKey, newAmount);
     }
   };
-  const Reset = () => {
-    setAmountOne(1);
-    setAmountTwo(1);
-    setAmountThree(1);
+
+  const handleReset = () => {
+    setAmount(1);
     props.onAmountChange(0);
-    localStorage.setItem("amount1", 1);
-    localStorage.setItem("amount2", 1);
-    localStorage.setItem("amount3", 1);
+    localStorage.setItem(storageKey, 1);
+  };
+
+  const handleOrder = () => {
+    // Include any logic related to handling the order
+    // You can navigate or perform other actions here
+    if (Selection)
+      console.log(
+        "Order placed for service:",
+        props.id,
+        "with amount:",
+        amount
+      );
   };
 
   return (
-    <div style={{ width: "340px", margin: "20px", border: "2px solid #ccc" }}>
+    <div
+      style={{
+        width: "362px",
+        margin: "80px",
+        border: "2px solid #ccc",
+        borderRadius: "3rem",
+        backgroundColor: "white",
+      }}
+    >
       <img
         src={props.imageSrc}
         alt="Service"
-        style={{ width: "100%", height: "180px", objectFit: "cover" }}
+        style={{
+          width: "100%",
+          height: "190px",
+          objectFit: "cover",
+          borderTopLeftRadius: "3rem",
+          borderTopRightRadius: "3rem",
+        }}
       />
       <div style={{ padding: "10px" }}>
         <h3>Price: {props.price} birr</h3>
-        <h3>
-          Total Price:{" "}
-          {props.id === 1
-            ? amountOne * props.price
-            : props.id === 2
-            ? amountTwo * props.price
-            : amountThree * props.price}
-          birr
-        </h3>
-        <p>
-          Amount:{" "}
-          {props.id === 1
-            ? amountOne
-            : props.id === 2
-            ? amountTwo
-            : amountThree}
-        </p>
+        <h3>Total Price: {amount * props.price} birr</h3>
+        <p>Amount: {amount}</p>
         <div style={{ margin: "0px" }}>
           <button onClick={handleIncrement} style={{ margin: "5px" }}>
             +
           </button>
           <button onClick={handleDecrement}>-</button>
-          <button onClick={Reset} style={{ margin: "5px" }}>
+          <button onClick={handleReset} style={{ margin: "5px" }}>
             Reset
           </button>
+
           <button
-            onClick={props.onSelect}
+            onClick={handleOrder}
             style={{
-              margin: "5px",
+              marginLeft: "60px",
               backgroundColor: "blueviolet",
               color: "white",
+              margin: "10px",
             }}
           >
-            Select
+            add to cart
           </button>
         </div>
       </div>
