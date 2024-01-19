@@ -14,6 +14,11 @@ const GoogleMap = () => {
           allowFullScreen
         ></iframe>
       </div>
+<<<<<<< HEAD
+=======
+
+      <container></container>
+>>>>>>> 50ab23b0252c2bbc96c47519f7650b856559725a
     </div>
   );
 };
