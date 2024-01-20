@@ -6,11 +6,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-<<<<<<< HEAD
   /* background-image: url("images/545589.jpg"); */
-=======
-  background-image: url("images/545589.jpg");
->>>>>>> 50ab23b0252c2bbc96c47519f7650b856559725a
 }nav {
     display: flex;
     justify-content: space-between;

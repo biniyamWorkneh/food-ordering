@@ -1,5 +1,4 @@
 import React from "react";
-<<<<<<< HEAD
 import imm from "../public/images/bbb.jpg";
 import bini from "../public/images/545589.jpg";
 import { useParams } from "react-router-dom";
@@ -83,11 +82,3 @@ const App = () => {
 };
 
 export default App;
-=======
-
-const Cart = () => {
-  return <div>Cart</div>;
-};
-
-export default Cart;
->>>>>>> 50ab23b0252c2bbc96c47519f7650b856559725a
