@@ -35,7 +35,7 @@ const Navbar = () => {
       </div>
       <ul className={showMenu ? "menu-active" : "menu"}>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/home">Home</Link>
         </li>
         <li>
           <Link to="/details">detail</Link>
@@ -51,6 +51,12 @@ const Navbar = () => {
         </li>
         <li>
           <Link to="/payment">Pay</Link>
+        </li>
+        <li>
+          <Link to="/">login</Link>
+        </li>
+        <li>
+          <Link to="/register">register</Link>
         </li>
       </ul>
       <div className="menu-icon" onClick={handleClick}>

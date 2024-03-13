@@ -1,57 +1,48 @@
-// ServiceCard.jsx
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
-const ServiceCard = ({ id, imageSrc, price, onAmountChange }) => {
-  const storageKey = `amount${id}`;
+const ServiceCard = ({ id, imageSrc, price, intialAmount, onAmountChange }) => {
+  const [amount, setAmount] = useState(intialAmount);
 
-  const getStoredAmount = () => {
-    try {
-      const storedValue = localStorage.getItem(storageKey);
-      return storedValue ? JSON.parse(storedValue) : 1;
-    } catch (error) {
-      console.error("Error parsing JSON:", error);
-      return 1; // Default to 1 if there's an error
-    }
-  };
+  
 
-  const [amount, setAmount] = useState(() => getStoredAmount());
+  
 
   const handleIncrement = () => {
     const newAmount = amount + 1;
-    onAmountChange(newAmount);
-    setAmount(newAmount);
-    localStorage.setItem(storageKey, newAmount);
+   setAmount(newAmount)
   };
 
   const handleDecrement = () => {
     if (amount > 1) {
       const newAmount = amount - 1;
-      onAmountChange(newAmount);
-      setAmount(newAmount);
-      localStorage.setItem(storageKey, newAmount);
+      setAmount(newAmount)
     }
   };
 
-  const handleReset = () => {
-    setAmount(1);
-    onAmountChange(0);
-    localStorage.setItem(storageKey, 1);
+  const handleChangeAmount = async () => {
+    try {
+      const response = await axios.post(`http://localhost:4500/update-amount/${id}`, { amount: amount });
+      window.location.reload()
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const handleOrder = () => {
-    // Include any logic related to handling the order
-    // You can navigate or perform other actions here
-    if (Selection)
-      console.log("Order placed for service:", id, "with amount:", amount);
+  const handleOrder = async () => {
+     handleChangeAmount()
+     const response = await axios.post(`http://localhost:4500/update-cart/${id}`);
+    console.log("Order placed for service:", id, "with amount:", amount);
   };
+
+ 
 
   return (
     <div
       style={{
         width: "362px",
-        margin: "80px 0 0 90px ",
+        margin: "80px 0 0 90px",
         border: "2px solid #ccc",
         borderRadius: "3rem",
         backgroundColor: "white",
@@ -75,14 +66,15 @@ const ServiceCard = ({ id, imageSrc, price, onAmountChange }) => {
         <h3>Total Price: {amount * price} birr</h3>
         <p>Amount: {amount}</p>
         <div style={{ margin: "0px" }}>
+          <button onClick={handleDecrement} style={{ margin: "5px" }}>
+            -
+          </button>
           <button onClick={handleIncrement} style={{ margin: "5px" }}>
             +
           </button>
-          <button onClick={handleDecrement}>-</button>
-          <button onClick={handleReset} style={{ margin: "5px" }}>
-            Reset
+          <button onClick={handleChangeAmount} style={{ margin: "5px" }}>
+            Save
           </button>
-
           <button
             onClick={handleOrder}
             style={{
@@ -94,7 +86,7 @@ const ServiceCard = ({ id, imageSrc, price, onAmountChange }) => {
           >
             <Link
               to={{
-                pathname: `/cart/${id}`,
+                pathname: `/cart`,
                 state: { price, imageSrc, onAmountChange },
               }}
               style={{ color: "white" }}

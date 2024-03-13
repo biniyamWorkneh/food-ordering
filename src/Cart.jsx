@@ -1,84 +1,121 @@
-import React from "react";
-import imm from "../public/images/bbb.jpg";
-import bini from "../public/images/545589.jpg";
-import { useParams } from "react-router-dom";
-import { services as products } from "./data2/data2";
-//import "../styles.css"; // Import your custom styles
-const content = "content";
 
-const Card = ({ product }) => {
-  return (
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+
+const Card = ({ imageSrc, price, details, id }) => (
+  <div className="content">
     <div
+      className="row"
       style={{
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
+        width: "350px",
+        margin: "35px",
+        border: "4px solid #ccc",
+        borderRadius: "20px",
+        backgroundColor: "white",
       }}
     >
-      <div
+      <img
+        src={imageSrc}
+        alt="Product"
         style={{
-          height: "15rem",
-          width: "40rem",
-          backgroundColor: "white",
-          borderRadius: "1rem",
-          border: "3px solid silver",
-          marginTop: "50px",
-          boxShadow: "0 4px 8px rgba(0,0,0,0.15)",
+          width: "100%",
+          height: "200px",
+          objectFit: "cover",
+          borderRadius: "15px",
         }}
-      >
-        <div style={{ margin: "0px", position: "relative" }}>
-          <img
-            src={`/${product.imageSrc}`}
-            alt=""
-            style={{
-              height: "15rem",
-              width: "20rem",
-              margin: "",
-              borderRadius: "10px",
-              overflow: "hidden",
+      />
+      <div style={{ padding: "10px" }}>
+        <h3>Price: birr {price}</h3>
+        <p>{details}</p>
+        <button
+          style={{
+            fontWeight: "bold",
+            fontSize: "20px",
+            backgroundColor: "green",
+          }}
+        >
+          <Link
+            to={{
+              pathname: `/details/${id}`,
+              state: { price, imageSrc }, // Pass data in the state
             }}
-            onLoad={() => console.log("Image loaded")}
-          />
-
-          <p
-            style={{
-              fontWeight: "bold",
-              textAlign: "center",
-              marginRight: "300px",
-            }}
+            style={{ color: "white" }}
           >
-            price: birr {product.price}
-          </p>
-        </div>
+            See in Detail
+          </Link>
+        </button>
       </div>
     </div>
-  );
-};
+  </div>
+);
+const ProductList = () => {
+  const itemsPerPage = 3; // Number of items to display per page
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productData, setProductData] = useState()
 
-const Details = () => {
-  const params = useParams();
-  console.log(params.id);
-  const filterdProducts = products.filter(
-    (product) => product.id.toString() === params.id.toString()
-  );
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentProducts = productData?.slice(indexOfFirstItem, indexOfLastItem);
+console.log("cart",productData)
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:4500/carts");
+        console.log(response ,"res777777")
+        setProductData(response.data?.data[0].foodIds)
+      } catch (error) {
+      } 
+    };
+
+    fetchData();
+  }, []);
+
+  const handlePageClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const totalPages = Math.ceil(productData?.length / itemsPerPage);
 
   return (
     <>
-      {filterdProducts.map((bini) => (
-        <Card key={bini.id} product={bini} />
-      ))}
-    </>
+    {productData ? ( <div className="biniyam">
+      <div
+        style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}
+      >
+        {currentProducts.map((product) => (
+          <Card
+            key={product.id}
+            imageSrc={product.imageSrc}
+            price={product.price}
+            details={product.details}
+            id={product.id}
+          />
+        ))}
+      </div>
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
+        {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+          (page) => (
+            <button
+              key={page}
+              style={{
+                margin: "5px",
+                padding: "8px",
+                border: currentPage === page ? "2px solid #333" : "none",
+                borderRadius: "5px",
+                cursor: "pointer",
+              }}
+              onClick={() => handlePageClick(page)}
+            >
+              {page}
+            </button>
+          )
+        )}
+      </div>
+    </div>) : (<div>Loading...</div>)} </>
+   
   );
 };
 
-const App = () => {
-  return (
-    <div>
-      <Details />
-    </div>
-  );
-};
-
-export default App;
+export default ProductList;

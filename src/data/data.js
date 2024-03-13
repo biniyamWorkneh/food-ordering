@@ -8,6 +8,7 @@ export const productData = [
     carbohaydrate: "30%",
     fat: "5%",
     vitamins: "20%",
+    amount:1,
   },
   {
     id: 2,
@@ -18,6 +19,7 @@ export const productData = [
     carbohaydrate: "70%",
     fat: "55%",
     vitamins: "45%",
+    amount:1,
   },
   {
     id: 3,
@@ -28,6 +30,7 @@ export const productData = [
     carbohaydrate: "37%",
     fat: "54%",
     vitamins: "10%",
+    amount:1,
   },
   {
     id: 4,
@@ -38,6 +41,7 @@ export const productData = [
     carbohaydrate: "30%",
     fat: "5%",
     vitamins: "20%",
+    amount:1,
   },
   {
     id: 5,
@@ -48,6 +52,7 @@ export const productData = [
     carbohaydrate: "30%",
     fat: "5%",
     vitamins: "20%",
+    amount:1,
   },
   {
     id: 6,
@@ -58,6 +63,7 @@ export const productData = [
     carbohaydrate: "30%",
     fat: "5%",
     vitamins: "20%",
+    amount:1,
   },
   {
     id: 7,
@@ -68,6 +74,7 @@ export const productData = [
     carbohaydrate: "30%",
     fat: "5%",
     vitamins: "20%",
+    amount:1,
   },
   {
     id: 8,
@@ -78,6 +85,7 @@ export const productData = [
     carbohaydrate: "30%",
     fat: "5%",
     vitamins: "20%",
+    amount:1,
   },
   {
     id: 9,
@@ -88,5 +96,6 @@ export const productData = [
     carbohaydrate: "30%",
     fat: "5%",
     vitamins: "20%",
+    amount:1,
   },
 ];

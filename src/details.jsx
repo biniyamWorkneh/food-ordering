@@ -1,99 +1,62 @@
 import React from "react";
-import imm from "../public/images/bbb.jpg";
-import bini from "../public/images/545589.jpg";
 import { useParams } from "react-router-dom";
 import { productData as products } from "./data/data";
-//import "../styles.css"; // Import your custom styles
-const content = "content";
 
-const Card = ({ producto }) => {
+const Details = () => {
+  const { id } = useParams(); // Extract the id parameter from the URL
+
+  // Find the product with the matching id
+  const product = products.find((product) => product.id.toString() === id.toString());
+
+  // Render the details of the product
   return (
     <div
       style={{
-        height: "100vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        flexDirection: "column",
         height: "100vh",
       }}
     >
-      <div
-        style={{
-          height: "40rem",
-          width: "30rem",
-          backgroundColor: "white",
-          borderRadius: "1rem",
-          border: "3px solid silver",
-          marginTop: "50px",
-          boxShadow: "0 4px 8px rgba(0,0,0,0.15)",
-        }}
-      >
-        <div style={{ margin: "0px" }}>
+      {product ? (
+        <div
+          style={{
+            width: "25%",
+            padding: "1px",
+            margin:"20px",
+            border: "2px solid #ccc",
+            borderRadius: "10px",
+            backgroundColor: "white",
+            height:"750px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.8)"         }}
+        >
           <img
-            src={`/${producto.imageSrc}`}
+            src={`/${product.imageSrc}`}
             alt=""
             style={{
-              height: "20rem",
-              width: "30rem",
-              margin: "",
+              width: "100%",
+              height: "60%",
+              marginBottom: "20px",
               borderRadius: "10px",
-              overflow: "hidden",
             }}
-            onLoad={() => console.log("Image loaded")}
           />
-
-          <div style={{ margin: "25px" }}>
-            <h3>{producto.content}</h3>
-            <p> protine: {producto.protine}</p>
-            <p>fat: {producto.fat}</p>
-            <p>carbohaydrate: {producto.carbohaydrate}</p>
-            <p>vitamins: {producto.vitamins}</p>
-          </div>
-          <p
-            style={{
-              fontWeight: "bold",
-              textAlign: "center",
-              marginRight: "300px",
-            }}
-          >
-            price: birr {producto.price}
-          </p>
+          <h2>{product.name}</h2>
+          <h3 style={{ marginBottom: "10px",fontWeight:"bold", marginLeft:"20px",fontSize:"22px"
+        }}>content</h3>
+          <p style={{ marginBottom: "10px", marginLeft:"20px" }}>Protein: {product.protine}</p>
+          <p style={{ marginBottom: "10px", marginLeft:"20px" }}> Fat: {product.fat}</p>
+          <p style={{ marginBottom: "10px", marginLeft:"20px" }}>Carbohydrate: {product.carbohaydrate}</p>
+          <p style={{ marginBottom: "10px" , marginLeft:"20px"}}>Vitamins: {product.vitamins}</p>
+          <p style={{ marginBottom: "10px",fontWeight:"bold", marginLeft:"20px",fontSize:"18px"
+        }}>Price: {product.price}</p>
+          {/* Render other details of the product */}
         </div>
-      </div>
+      ) : ( 
+        <p>No product found.</p>
+      )}
     </div>
   );
 };
 
-const Details = () => {
-  const params = useParams();
-  console.log(params.id);
-  const filterdProducts = products.filter(
-    (producto) => producto.id.toString() === params.id.toString()
-  );
-
-  return (
-    <>
-      {filterdProducts.map((bini) => (
-        <Card key={bini.id} producto={bini} />
-      ))}
-    </>
-  );
-};
-
-const App = () => {
-  return (
-    <div
-    // style={{
-    //   height: "100vh",
-    //   width: "100%",
-    //   backgroundImage: `url(${bini})`,
-    //   backgroundSize: "cover",
-    //   overflow: "hidden",
-    // }}
-    >
-      <Details />
-    </div>
-  );
-};
-
-export default App;
+export default Details;
